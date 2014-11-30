@@ -164,3 +164,25 @@ no problems detected
 
 !ENTRY org.eclipse.ui 2 2 2014-11-26 17:11:24.272
 !MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
+!SESSION 2014-11-30 22:53:13.876 -----------------------------------------------
+eclipse.buildId=debbuild
+java.version=1.7.0_67
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_GB
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2014-11-30 22:53:17.491
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.vectrace.MercurialEclipse 1 0 2014-11-30 22:53:23.243
+!MESSAGE checking encoding (ascii)...
+checking Python lib (/usr/lib/python2.7)...
+checking installed modules (/usr/lib/python2.7/dist-packages/mercurial)...
+checking templates (/usr/share/mercurial/templates)...
+checking commit editor...
+checking username...
+no username found, using 'jy14@texel29.doc.ic.ac.uk' instead
+no problems detected
+
+!ENTRY org.eclipse.ui 2 2 2014-11-30 22:56:58.022
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)

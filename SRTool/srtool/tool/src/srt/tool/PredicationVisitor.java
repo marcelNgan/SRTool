@@ -30,7 +30,7 @@ public class PredicationVisitor extends DefaultVisitor {
 		} else {
 			variableChars.setCharAt(variableChars.length()-1, (char) (lastChar+1));
 		}
-		freshVariable = variableChars.toString()
+		freshVariable = variableChars.toString();
 		return freshVariable;
 	}
 	
@@ -44,7 +44,7 @@ public class PredicationVisitor extends DefaultVisitor {
 		//R = P && !E;
 		//Pred(S, Q);
 		//Pred(T, R);
-		List<Stmt> stmts = new LinkedList<Stmt>();
+		/*List<Stmt> stmts = new LinkedList<Stmt>();
 		Expr ifExpr = ifStmt.getCondition();
 		DeclRef q = new DeclRef(generateFreshVariable());
         DeclRef r = new DeclRef(generateFreshVariable());
@@ -67,7 +67,8 @@ public class PredicationVisitor extends DefaultVisitor {
 		stmts.add(elseStmt);
 		parentPredicate = tempParentPredicate;
 				
-		return super.visit((new BlockStmt(stmts,ifStmt.getNodeInfo())));
+		return super.visit((new BlockStmt(stmts,ifStmt.getNodeInfo())));*/
+		return ifStmt;
 	}
 
 	@Override

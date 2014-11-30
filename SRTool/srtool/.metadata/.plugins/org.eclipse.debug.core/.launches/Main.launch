@@ -7,6 +7,6 @@
 <listEntry value="1"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="srt.tool.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="../tests/loopfree/1_simple/2_good.sc -mode bmc -v"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="../tests/bmc_sound/loop_good.sc -mode bmc -v"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="tool"/>
 </launchConfiguration>

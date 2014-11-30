@@ -10,6 +10,7 @@ import srt.ast.IfStmt;
 import srt.ast.IntLiteral;
 import srt.ast.Invariant;
 import srt.ast.Stmt;
+import srt.ast.UnaryExpr;
 import srt.ast.WhileStmt;
 import srt.ast.visitor.impl.DefaultVisitor;
 
@@ -37,7 +38,7 @@ public class LoopUnwinderVisitor extends DefaultVisitor {
 		
 		List<Invariant> invariants = whileStmt.getInvariantList().getInvariants();
 		
-		List<Stmt> invariantList = new ArrayList<>();
+		List<Stmt> invariantList = new ArrayList<Stmt>();
 		
 		//invariants
 		for (Invariant invariant : invariants) {
@@ -51,8 +52,8 @@ public class LoopUnwinderVisitor extends DefaultVisitor {
 		
 		if (defaultIsUsed && !unsound) {
 			endIfBranch = new BlockStmt(new Stmt[] {
-					new AssertStmt(new IntLiteral(0)),
-					new AssumeStmt(new IntLiteral(0)) });
+					new AssertStmt(new UnaryExpr(UnaryExpr.LNOT,whileStmt.getCondition())),
+					new AssumeStmt(new UnaryExpr(UnaryExpr.LNOT,whileStmt.getCondition())) });
 		} else {
 			endIfBranch = new BlockStmt(new Stmt[] { new AssumeStmt(
 					new IntLiteral(0)) });
