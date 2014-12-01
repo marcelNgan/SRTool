@@ -12,7 +12,7 @@ public class AssertStmt extends Stmt {
 	}
 	
 	public AssertStmt(Invariant invariant) {
-		this (invar.getExpr());
+		this (invariant.getExpr());
 		children.add(invariant);
 	}
 	

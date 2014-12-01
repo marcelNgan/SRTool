@@ -9,6 +9,7 @@ import java.util.List;
 import srt.ast.*;
 import srt.ast.Program;
 import srt.ast.visitor.impl.AssignmentVisitor;
+import srt.ast.visitor.impl.DefaultVisitor;
 import srt.ast.visitor.impl.PrinterVisitor;
 import srt.exec.ProcessExec;
 import srt.tool.exception.ProcessTimeoutException;

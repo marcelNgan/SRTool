@@ -21,7 +21,7 @@ public class InvariantExtractorVisitor extends DefaultVisitor {
 		return decl;
 	}
 	
-	public Object visit(IntLiterals intLiterals) {
+	public Object visit(IntLiteral intLiterals) {
 		intLiterals.add(intLiterals.getValue());
 		return intLiterals;
 	}

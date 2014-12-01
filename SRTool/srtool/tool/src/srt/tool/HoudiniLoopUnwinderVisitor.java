@@ -28,6 +28,7 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
     private List<List<Invariant>> loopInvariants = new ArrayList<List<Invariant>>();
     
 	public HoudiniLoopUnwinderVisitor(WhileStmt whileStmt) {
+		super(true);
 		List<Invariant> candidates = new ArrayList<Invariant>();
     	List<Invariant> invariants = new ArrayList<Invariant>();
     	for(Invariant invariant : whileStmt.getInvariantList().getInvariants()) {
@@ -39,7 +40,6 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
     	}
     	loopInvariants.add(invariants);
         candidateLoopInvariants.add(candidates);
-		super(true);
 	}
 
     @Override
