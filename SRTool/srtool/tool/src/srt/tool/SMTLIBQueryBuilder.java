@@ -64,12 +64,7 @@ public class SMTLIBQueryBuilder {
 		
 		// Check.
 		query.append("(check-sat)\n");
-		query.append("(get-value (");
-		for (int i = 0; i < currentPropertyIndex -1; i++) {
-			query.append("prop" + i + " ");
-		}
-		if (currentPropertyIndex > 0) query.append("prop" + (currentPropertyIndex -1));
-		query.append("))\n");
+		query.append("(get-value (" + propList + "))\n");
 		
 		queryString = query.toString();
 	}
