@@ -111,8 +111,8 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
     	
     	for (int i = 0; i < loopInvariants.size(); i++) {
     		List<Invariant> currentInvariants = new ArrayList<Invariant>();
-    		invariants.addAll(loopInvariants.get(i));
-    		invariants.addAll(candidateLoopInvariants.get(i));
+    		invariants.add(loopInvariants.get(i));
+    		invariants.add(candidateLoopInvariants.get(i));
     		invariants.add(currentInvariants);
     	}
     	
