@@ -46,8 +46,8 @@ public class SRToolImpl implements SRTool {
 				do {
 					LoopUnwinder.reset();
 					hasFailedCandidate = false;
-					preTrueCandidates = new ArrayList<>();
-					postTrueCandidates = new ArrayList<>();
+					preTrueCandidates = new ArrayList<Set<Integer>>();
+					postTrueCandidates = new ArrayList<Set<Integer>>();
 					for (int i = 0; i < loopCount; i++) {
 						preTrueCandidates.add(new HashSet<Integer>());
 						postTrueCandidates.add(new HashSet<Integer>());
@@ -98,7 +98,7 @@ public class SRToolImpl implements SRTool {
 						}
 
 
-						List<Set<Integer>> trueCandidates = new ArrayList<>();
+						List<Set<Integer>> trueCandidates = new ArrayList<Set<Integer>>();
 						for(int i = 0; i < loopCount; i++) {
 							postTrueCandidates.get(i).retainAll(preTrueCandidates.get(i));
 							trueCandidates.add(postTrueCandidates.get(i));
@@ -198,7 +198,7 @@ public class SRToolImpl implements SRTool {
 		}
 		@Override
 		public Object visit(WhileStmt whileStmt) {
-			list<Invariant> invariants = new ArrayList<>();
+			list<Invariant> invariants = new ArrayList<Invariant>();
 			invariants.addAll(whileStmt.getInvariantList().getInvariants());
 			invariants.addAll(invariantsList);
 			

@@ -47,7 +47,7 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
     	
 		int tempid = id++;
 		
-    	List<Stmt> stmts = new ArrayList<>();
+    	List<Stmt> stmts = new ArrayList<Stmt>();
     	int inv = 0;
     	int cand = 0;
     	
@@ -84,7 +84,7 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
     }
     
     public void setCandidates(List<Set<Integer>> candidates) {
-    	List<List<Invariant>> newCandidates = new ArrayList<>();
+    	List<List<Invariant>> newCandidates = new ArrayList<List<Invariant>>();
     	
     	int i = 0;
     	for (Set<Integer> validCandidateIndices : candidates) {
@@ -99,10 +99,10 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
     }
     
     public List<List<Invariant>> getAllInvariants() {
-    	List<List<Invariant>> invariants = new ArrayList<>();
+    	List<List<Invariant>> invariants = new ArrayList<List<Invariant>>();
     	
     	for (int i = 0; i < loopInvariants.size(); i++) {
-    		List<Invariant> currentInvariants = new ArrayList<>();
+    		List<Invariant> currentInvariants = new ArrayList<Invariant>();
     		invariants.addAll(loopInvariants.get(i));
     		invariants.addAll(candidateLoopInvariants.get(i));
     		invariants.add(currentInvariants);
