@@ -62,7 +62,7 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
         
         inv = 0;
         cand = 0;
-        List<Stmt> loopBodyStatements = new ArrayList<>();
+        List<Stmt> loopBodyStatements = new ArrayList<Stmt>();
         loopBodyStatements.add(body);
     	for (Invariant invariant : loopInvariants.get(tempid)) {
     		loopBodyStatements.add(new AssertStmt(invariant.getExpr(), "inv-" + tempid + "-" + inv++ + "-post"));
@@ -71,7 +71,7 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
     		loopBodyStatements.add(new AssertStmt(invariant.getExpr(), "cand-" + tempid + "-" + cand++ + "-post"));	
     	}
     	
-    	List<Invariant> invariantsToAdd = new ArrayList<>();
+    	List<Invariant> invariantsToAdd = new ArrayList<Invariant>();
     	invariantsToAdd.addAll(loopInvariants.get(tempid));
     	invariantsToAdd.addAll(candidateLoopInvariants.get(tempid));
     	
