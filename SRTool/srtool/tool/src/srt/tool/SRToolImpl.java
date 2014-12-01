@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import srt.ast.*
+import srt.ast.*;
 import srt.ast.Program;
 import srt.ast.visitor.impl.AssignmentVisitor;
 import srt.ast.visitor.impl.PrinterVisitor;
