@@ -25,9 +25,8 @@ public class SSAVisitor extends DefaultVisitor {
 	@Override
 	public Object visit(DeclRef declRef) {
 		String name = declRef.getName();
-		/*if(index.get(name)==null)
-			index.put(name, 0);*/
-		String SSAName = name+"$"+index.get(name);
+		if(index.get(name)==null)
+			index.put(name, 0);		String SSAName = name+"$"+index.get(name);
 		return new DeclRef(SSAName, declRef.getNodeInfo());
 	}
 
