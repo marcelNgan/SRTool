@@ -214,7 +214,7 @@ public class SRToolImpl implements SRTool {
 		}
 		@Override
 		public Object visit(WhileStmt whileStmt) {
-			list<Invariant> invariants = new ArrayList<Invariant>();
+			List<Invariant> invariants = new ArrayList<Invariant>();
 			invariants.addAll(whileStmt.getInvariantList().getInvariants());
 			invariants.addAll(invariantsList);
 			

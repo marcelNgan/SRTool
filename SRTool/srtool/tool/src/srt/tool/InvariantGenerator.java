@@ -14,7 +14,7 @@ public class InvariantGenerator {
 
 	public static List<Invariant> generate(Set<String> variableNames, Set<Integer> intLiterals) {
 		intLiterals.add(0);
-		List<Invariant> invariants = new ArrayList<invariants>();
+		List<Invariant> invariants = new ArrayList<Invariant>();
 		
 		for (String variableA : variableNames) {
 			DeclRef a = new DeclRef(variableA);
