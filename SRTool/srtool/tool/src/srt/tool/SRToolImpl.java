@@ -24,7 +24,7 @@ public class SRToolImpl implements SRTool {
 			
 			set<String> variableNames = invariantExtractor.getVariableNames();
 			set<Integer> intLiterals = invariantExtractor.getIntLiterals();			
-			List<Invariant> invariantList = InvariantGenerator.generate(variableNames, intLiterals)				
+			List<Invariant> invariantList = InvariantGenerator.generate(variableNames, intLiterals);
 			program = (Program) InvGenAddVisitor(invariantList).visit(program);
 		}
 
@@ -35,8 +35,8 @@ public class SRToolImpl implements SRTool {
 			
 			if (!LoopUnwinder.noLoops()) {
 				boolean hasFailedCandidate;
-				List<Set<Integer>> preTrueCandidates = new ArrayList<>();
-				List<Set<Integer>> postTrueCandidates = new ArrayList<>();
+				List<Set<Integer>> preTrueCandidates = new ArrayList<Set<Integer>>();
+				List<Set<Integer>> postTrueCandidates = new ArrayList<Set<Integer>>();
 				int loopCount = LoopUnwinder.loopCount();
 				for (int i = 0; i < loopCount; i++) {
 					preTrueCandidates.add(new HashSet<Integer>());

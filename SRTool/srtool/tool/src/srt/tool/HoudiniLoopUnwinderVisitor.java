@@ -24,8 +24,8 @@ import srt.ast.visitor.impl.PrinterVisitor;
 public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
     
     private int id = 0;
-    private List<List<Invariant>> candidateLoopInvariants = new ArrayList<>();
-    private List<List<Invariant>> loopInvariants = new ArrayList<>();
+    private List<List<Invariant>> candidateLoopInvariants = new ArrayList<List<Invariant>>();
+    private List<List<Invariant>> loopInvariants = new ArrayList<List<Invariant>>();
     
 	public HoudiniLoopUnwinderVisitor(WhileStmt whileStmt) {
 		List<Invariant> candidates = new ArrayList<Invariant>();
