@@ -26,24 +26,28 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
     private int id = 0;
     private List<List<Invariant>> candidateLoopInvariants = new ArrayList<List<Invariant>>();
     private List<List<Invariant>> loopInvariants = new ArrayList<List<Invariant>>();
-    
-	public HoudiniLoopUnwinderVisitor(WhileStmt whileStmt) {
+    private boolean initial = true;
+	
+	public HoudiniLoopUnwinderVisitor() {
 		super(true);
-		List<Invariant> candidates = new ArrayList<Invariant>();
-    	List<Invariant> invariants = new ArrayList<Invariant>();
-    	for(Invariant invariant : whileStmt.getInvariantList().getInvariants()) {
-    		if (invariant.isCandidate()) {
-           		candidates.add(invariant);
-           	} else {
-           		invariants.add(invariant);
-           	}
-    	}
-    	loopInvariants.add(invariants);
-        candidateLoopInvariants.add(candidates);
 	}
 
     @Override
     public Object visit(WhileStmt whileStmt) {
+	
+		if(initial){
+			List<Invariant> candidates = new ArrayList<Invariant>();
+			List<Invariant> invariants = new ArrayList<Invariant>();
+			for(Invariant invariant : whileStmt.getInvariantList().getInvariants()) {
+				if (invariant.isCandidate()) {
+					candidates.add(invariant);
+				} else {
+					invariants.add(invariant);
+				}
+			}
+			loopInvariants.add(invariants);
+			candidateLoopInvariants.add(candidates);
+		}
     	
 		int tempid = id++;
 		
@@ -82,6 +86,10 @@ public class HoudiniLoopUnwinderVisitor extends DefaultVisitor {
 
         return new BlockStmt(stmts);
     }
+	
+	public void setInitialFalse(){
+		this.initial = false;
+	}
     
     public void setCandidates(List<Set<Integer>> candidates) {
     	List<List<Invariant>> newCandidates = new ArrayList<List<Invariant>>();
