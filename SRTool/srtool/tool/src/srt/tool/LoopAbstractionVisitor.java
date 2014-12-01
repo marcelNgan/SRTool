@@ -40,7 +40,7 @@ public class LoopAbstractionVisitor extends DefaultVisitor {
 		for (Invariant invariant : invariants) {
 			Expr invariantexpr = invariant.getExpr();
 			invariantExprs.add(invariantexpr);
-			AssertStmt assertStmt = new AssertStmt(invariant);
+			AssertStmt assertStmt = new AssertStmt(invariantexpr);
 			AssertStmts.add(assertStmt);
 		}
 		stmts.addAll(AssertStmts);
