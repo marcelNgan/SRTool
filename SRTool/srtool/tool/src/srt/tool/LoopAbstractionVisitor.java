@@ -61,7 +61,7 @@ public class LoopAbstractionVisitor extends DefaultVisitor {
 		
 		List<Stmt> AssumeStmts = new LinkedList<Stmt>();
 		for (Invariant invariant : invariants) {
-			AssumeStmts.add(new AssumeStmt(invariant));
+			AssumeStmts.add(new AssumeStmt(invariant.getExpr()));
 		}
 		stmts.addAll(AssumeStmts);
 		
