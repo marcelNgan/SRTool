@@ -73,7 +73,7 @@ public class SRToolImpl implements SRTool {
 					SMTLIBQueryBuilder builder = new SMTLIBQueryBuilder(ccv);
 					builder.buildQuery();
 
-					smtQuery =  builder.getQuery();
+					String smtQuery =  builder.getQuery();
 					
 					ProcessExec process = new ProcessExec("z3", "-smt2", "-in");
 					String queryResult = "";
