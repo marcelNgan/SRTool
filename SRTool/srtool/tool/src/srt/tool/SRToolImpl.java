@@ -25,7 +25,7 @@ public class SRToolImpl implements SRTool {
 			set<String> variableNames = invariantExtractor.getVariableNames();
 			set<Integer> intLiterals = invariantExtractor.getIntLiterals();			
 			List<Invariant> invariantList = InvariantGenerator.generate(variableNames, intLiterals)				
-			program = (Program) AddCandidateInvariantsVisitor(invariantList).visit(program);
+			program = (Program) InvGenAddVisitor(invariantList).visit(program);
 		}
 
 		if (clArgs.mode.equals(CLArgs.HOUDINI) || clArgs.mode.equals(CLArgs.INVGEN)) {
@@ -186,6 +186,24 @@ public class SRToolImpl implements SRTool {
 			whileStmt.getInvariantList().setInvariants(invariants);
 			id++;
 			return super.visit(whileStmt);
+		}
+	}
+	
+	private class InvGenAddVisitor extends DefaultVisitor {
+		private List<Invariant> invariantsList;
+		
+		public InvGenAddVisitor(List<Invariant> invariantsList) {
+			super(true);
+			this.invariantsList = invariantsList;
+		}
+		@Override
+		public Object visit(WhileStmt whileStmt) {
+			list<Invariant> invariants = new ArrayList<>();
+			invariants.addAll(whileStmt.getInvariantList().getInvariants());
+			invariants.addAll(invariantsList);
+			
+			return new WhileStmt(whileStmt.getCondition(), whileStmt.getBound(),
+				new InvariantList(invariants), (BlockStmt) super.visit(whileStmt.getBody()));
 		}
 	}
 	
