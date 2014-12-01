@@ -51,11 +51,11 @@ public class SMTLIBQueryBuilder {
 		StringBuilder assertion = new StringBuilder();
 		StringBuilder propList = new StringBuilder();
 		int currentPropertyIndex = 0;
-		assertion.append("(assert \n");
+		assertion.append("(assert ");
 		for (AssertStmt assertStmt : constraints.propertyNodes) {
 			String varName = assertStmt.getName() != null ? assertStmt.getName() : ("prop" + currentPropertyIndex++);
 			query.append("(define-fun " + varName + " () (Bool) (not (tobool " + exprConverter.visit(assertStmt.getCondition()) + ")))\n");
-			assertion.append("(or " + varName + "\n");
+			assertion.append("(or " + varName);
 			propList.append(" " + varName);
 			closingBrackets.append(")");
 		}
