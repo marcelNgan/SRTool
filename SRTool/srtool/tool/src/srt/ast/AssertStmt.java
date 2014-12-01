@@ -21,6 +21,6 @@ public class AssertStmt extends Stmt {
 	}
 	
 	public Invariant getInvariant() {
-		return children.get(1);
+		return (Invariant) children.get(1);
 	}
 }
