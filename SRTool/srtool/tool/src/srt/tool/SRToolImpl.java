@@ -18,8 +18,17 @@ public class SRToolImpl implements SRTool {
 	}
 
 	public SRToolResult go() throws IOException, InterruptedException {
+		if(clArgs.mode.equals(CLArgs.INVGEN)){
+			InvariantExtractorVisitor invariantExtractor = new InvariantExtractorVisitor();
+			invariantExtractor.visit(program);
+			
+			set<String> variableNames = invariantExtractor.getVariableNames();
+			set<Integer> intLiterals = invariantExtractor.getIntLiterals();			
+			List<Invariant> invariantList = InvariantGenerator.generate(variableNames, intLiterals)				
+			program = (Program) AddCandidateInvariantsVisitor(invariantList).visit(program);
+		}
 
-		if (clArgs.mode.equals(CLArgs.HOUDINI)) {
+		if (clArgs.mode.equals(CLArgs.HOUDINI) || clArgs.mode.equals(CLArgs.INVGEN)) {
     		// Extract all loops
 			HoudiniLoopUnwinderVisitor LoopUnwinder = new HoudiniLoopUnwinderVisitor(program);
 			Program loopProgram = (Program) LoopUnwinder.visit(program);
