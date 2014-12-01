@@ -2,6 +2,7 @@ package srt.tool;
 
 import java.io.IOException;
 
+import srt.ast.*
 import srt.ast.Program;
 import srt.ast.visitor.impl.AssignmentVisitor;
 import srt.ast.visitor.impl.PrinterVisitor;
