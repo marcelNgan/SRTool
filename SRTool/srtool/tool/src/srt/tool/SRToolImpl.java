@@ -19,7 +19,91 @@ public class SRToolImpl implements SRTool {
 
 	public SRToolResult go() throws IOException, InterruptedException {
 
-		// TODO: Transform program using Visitors here.
+		if (clArgs.mode.equals(CLArgs.HOUDINI)) {
+    		// Extract all loops
+			HoudiniLoopUnwinderVisitor LoopUnwinder = new HoudiniLoopUnwinderVisitor(program);
+			Program loopProgram = (Program) LoopUnwinder.visit(program);
+			
+			if (!LoopUnwinder.noLoops()) {
+				boolean hasFailedCandidate;
+				List<Set<Integer>> preTrueCandidates = new ArrayList<>();
+				List<Set<Integer>> postTrueCandidates = new ArrayList<>();
+				int loopCount = LoopUnwinder.loopCount();
+				for (int i = 0; i < loopCount; i++) {
+					preTrueCandidates.add(new HashSet<Integer>());
+					postTrueCandidates.add(new HashSet<Integer>());
+				}
+				
+				do {
+					LoopUnwinder.reset();
+					hasFailedCandidate = false;
+					preTrueCandidates = new ArrayList<>();
+					postTrueCandidates = new ArrayList<>();
+					for (int i = 0; i < loopCount; i++) {
+						preTrueCandidates.add(new HashSet<Integer>());
+						postTrueCandidates.add(new HashSet<Integer>());
+					}
+					
+					Program newLoopProgram;
+					newLoopProgram = (Program) new LoopAbstractionVisitor().visit(loopProgram);
+					newLoopProgram = (Program) new PredicationVisitor().visit(newLoopProgram);
+					newLoopProgram = (Program) new SSAVisitor().visit(newLoopProgram);
+
+					String smtQuery = buildSMTQuery(newLoopProgram);
+					ProcessExec process = new ProcessExec("z3", "-smt2", "-in");
+					String queryResult = "";
+					try {
+						queryResult = process.execute(smtQuery, clArgs.timeout);
+					} catch (ProcessTimeoutException e) {
+						if (clArgs.verbose) {
+							System.out.println("Timeout!");
+						}
+						return SRToolResult.UNKNOWN;
+					}
+					
+					if (queryResult.startsWith("sat")) {
+						Pattern p = Pattern.compile("([\\w-]+ \\w+)");
+						Matcher m = p.matcher(queryResult);
+						
+						while (m.find()) {
+							String match = m.group();
+							String[] matches = match.split(" ");
+							String invariantName = matches[0];
+							
+							
+							if (invariantName.startsWith("cand")) {
+								if (matches[1].equals("true")) {
+									hasFailedCandidate = true;
+								} else if (matches[1].equals("false")) {
+									String[] splitString = matches[0].split("-");
+									int loopId = Integer.parseInt(splitString[1]);
+									int invId = Integer.parseInt(splitString[2]);
+									if(splitString[3].equals("pre")) {
+										preTrueCandidates.get(loopId).add(invId);			
+									} else if (splitString[3].equals("post")) {
+										postTrueCandidates.get(loopId).add(invId);
+									}
+
+								}
+							}
+						}
+
+
+						List<Set<Integer>> trueCandidates = new ArrayList<>();
+						for(int i = 0; i < loopCount; i++) {
+							postTrueCandidates.get(i).retainAll(preTrueCandidates.get(i));
+							trueCandidates.add(postTrueCandidates.get(i));
+						}
+						LoopUnwinder.setCandidates(trueCandidates);
+						loopProgram = (Program) LoopUnwinder.visit(program);
+					}
+	
+				} while (hasFailedCandidate);
+
+				List<List<Invariant>> invariantsLists = LoopUnwinder.getAllInvariants();				
+				program = (Program) new HoudiniVisitor(invariantsLists).visit(program);
+			}
+		}
 
 		if (clArgs.mode.equals(CLArgs.BMC)) {
 			program = (Program) new LoopUnwinderVisitor(clArgs.unsoundBmc,
@@ -29,7 +113,7 @@ public class SRToolImpl implements SRTool {
 		}
 		program = (Program) new PredicationVisitor().visit(program);
 		program = (Program) new SSAVisitor().visit(program);
-		//program = (Program) new AssignmentVisitor().visit(program);
+		
 		// Output the program as text after being transformed (for debugging).
 		if (clArgs.verbose) {
 			String programText = new PrinterVisitor().visit(program);
@@ -80,4 +164,20 @@ public class SRToolImpl implements SRTool {
 		// query result started with something other than "sat" or "unsat"
 		return SRToolResult.UNKNOWN;
 	}
+	private class HoudiniVisitor extends DefaultVisitor {
+		private List<List<Invariant>> invariantsList;
+		private int id;
+		public HoudiniVisitor(List<List<Invariant>> invariantsList) {
+			super(true);
+			this.invariantsList = invariantsList;
+		}
+		@Override
+		public Object visit(WhileStmt whileStmt) {
+			list<Invariant> invariants = invariantsList.get(id);
+			whileStmt.getInvariantList().setInvariants(invariants);
+			id++;
+			return super.visit(whileStmt);
+		}
+	}
+	
 }

@@ -23,4 +23,9 @@ public class InvariantList extends Node {
 	public List<Invariant> getInvariants() {
 		return (List<Invariant>) children.clone();
 	}
+	
+	public void setInvariants(List<Invariant> invariants){
+		children.clear();
+		children.addAll(invariants);
+	}
 }

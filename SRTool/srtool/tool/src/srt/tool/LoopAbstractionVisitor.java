@@ -40,10 +40,10 @@ public class LoopAbstractionVisitor extends DefaultVisitor {
 		for (Invariant invariant : invariants) {
 			Expr invariantexpr = invariant.getExpr();
 			invariantExprs.add(invariantexpr);
-			AssertStmt assertStmt = new AssertStmt(invariantexpr);
+			AssertStmt assertStmt = new AssertStmt(invariant);
 			AssertStmts.add(assertStmt);
-			stmts.addAll(AssertStmts);
 		}
+		stmts.addAll(AssertStmts);
 		
 		Expr whileCondition = whileStmt.getCondition();
 		Stmt whileBody = whileStmt.getBody();
@@ -61,7 +61,7 @@ public class LoopAbstractionVisitor extends DefaultVisitor {
 		
 		List<Stmt> AssumeStmts = new LinkedList<Stmt>();
 		for (Invariant invariant : invariants) {
-			AssumeStmts.add(new AssumeStmt(invariant.getExpr()));
+			AssumeStmts.add(new AssumeStmt(invariant));
 		}
 		stmts.addAll(AssumeStmts);
 		
