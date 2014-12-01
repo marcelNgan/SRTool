@@ -48,18 +48,18 @@ public class SMTLIBQueryBuilder {
 		// Add assertion checks.
 		
 		StringBuilder closingBrackets = new StringBuilder();
-		StringBuilder assetion = new StringBuilder();
+		StringBuilder assertion = new StringBuilder();
 		StringBuilder propList = new StringBuilder();
 		int currentPropertyIndex = 0;
-		assetion.append("(assert ");
+		assertion.append("(assert ");
 		for (AssertStmt assertStmt : constraints.propertyNodes) {
 			String varName = assertStmt.getName() != null ? assertStmt.getName() : ("prop" + currentPropertyIndex++);
 			query.append("(define-fun " + varName + " () (Bool) (not (tobool " + exprConverter.visit(assertStmt.getCondition()) + ")))\n");
-			assetion.append("(or " + varName + "\n"));
+			assertion.append("(or " + varName);
 			propList.append(" " + varName);
 			closingBrackets.append(")");
 		}
-		assetion.append(closingBrackets.toString() + ")\n");
+		assertion.append(closingBrackets.toString() + ")\n");
 		query.append(assertion);
 		
 		// Check.
