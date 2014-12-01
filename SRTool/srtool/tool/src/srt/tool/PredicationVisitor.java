@@ -77,7 +77,7 @@ public class PredicationVisitor extends DefaultVisitor {
 		// assert(G && P => E)
 		Expr lhs = new UnaryExpr(UnaryExpr.LNOT, gAndP());
 		Expr rhs = assertStmt.getCondition();
-		return super.visit(new AssertStmt(new BinaryExpr(BinaryExpr.LOR, lhs, rhs), assertStmt.getNodeInfo()));
+		return super.visit(new AssertStmt(new BinaryExpr(BinaryExpr.LOR, lhs, rhs), assertStmt.getName()));
 	}
 
 	@Override
