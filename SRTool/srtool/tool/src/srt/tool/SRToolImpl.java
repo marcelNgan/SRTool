@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.LinkedList;
 import java.util.List;
 import srt.ast.*;
@@ -13,7 +14,8 @@ import srt.ast.visitor.impl.DefaultVisitor;
 import srt.ast.visitor.impl.PrinterVisitor;
 import srt.exec.ProcessExec;
 import srt.tool.exception.ProcessTimeoutException;
-
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class SRToolImpl implements SRTool {
 	private Program program;
@@ -65,7 +67,14 @@ public class SRToolImpl implements SRTool {
 					newLoopProgram = (Program) new PredicationVisitor().visit(newLoopProgram);
 					newLoopProgram = (Program) new SSAVisitor().visit(newLoopProgram);
 
-					String smtQuery = buildSMTQuery(newLoopProgram);
+					CollectConstraintsVisitor ccv = new CollectConstraintsVisitor();
+					ccv.visit(newLoopProgram);
+
+					SMTLIBQueryBuilder builder = new SMTLIBQueryBuilder(ccv);
+					builder.buildQuery();
+
+					smtQuery =  builder.getQuery();
+					
 					ProcessExec process = new ProcessExec("z3", "-smt2", "-in");
 					String queryResult = "";
 					try {
