@@ -63,8 +63,10 @@ public class PredicationVisitor extends DefaultVisitor {
 		Stmt thenStmt = (Stmt) visit(ifStmt.getThenStmt());
 		stmts.add(thenStmt);
 		parentPredicate = r;
-		Stmt elseStmt = (Stmt) visit(ifStmt.getElseStmt());
-		stmts.add(elseStmt);
+		if (ifStmt.getElseStmt()!=null){
+			Stmt elseStmt = (Stmt) visit(ifStmt.getElseStmt());
+			stmts.add(elseStmt);
+		}
 		parentPredicate = tempParentPredicate;
 				
 		return super.visit((new BlockStmt(stmts,ifStmt.getNodeInfo())));
