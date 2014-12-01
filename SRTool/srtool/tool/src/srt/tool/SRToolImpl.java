@@ -39,8 +39,8 @@ public class SRToolImpl implements SRTool {
 
 		if (clArgs.mode.equals(CLArgs.HOUDINI) || clArgs.mode.equals(CLArgs.INVGEN)) {
     		// Extract all loops
-			HoudiniLoopUnwinderVisitor LoopUnwinder = new HoudiniLoopUnwinderVisitor(program);
-			Program loopProgram = (Program) LoopUnwinder.visit();
+			HoudiniLoopUnwinderVisitor LoopUnwinder = new HoudiniLoopUnwinderVisitor();
+			Program loopProgram = (Program) LoopUnwinder.visit(program);
 			LoopUnwinder.setInitialFalse();
 			
 			if (!LoopUnwinder.noLoops()) {
