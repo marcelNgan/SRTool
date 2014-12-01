@@ -34,7 +34,7 @@ public class SRToolImpl implements SRTool {
 			Set<String> variableNames = invariantExtractor.getVariableNames();
 			Set<Integer> intLiterals = invariantExtractor.getIntLiterals();			
 			List<Invariant> invariantList = InvariantGenerator.generate(variableNames, intLiterals);
-			program = (Program) InvGenAddVisitor(invariantList).visit(program);
+			program = (Program) new InvGenAddVisitor(invariantList).visit(program);
 		}
 
 		if (clArgs.mode.equals(CLArgs.HOUDINI) || clArgs.mode.equals(CLArgs.INVGEN)) {
