@@ -1,7 +1,7 @@
 package srt.ast;
 
 public class AssertStmt extends Stmt {
-	
+		
 	public AssertStmt(Expr condition) {
 		this(condition, null);
 	}
@@ -11,7 +11,16 @@ public class AssertStmt extends Stmt {
 		children.add(condition);
 	}
 	
+	public AssertStmt(Invariant invariant) {
+		this (invar.getExpr());
+		children.add(invariant);
+	}
+	
 	public Expr getCondition() {
 		return (Expr) children.get(0);
+	}
+	
+	public Invariant getInvariant() {
+		return children.get(1);
 	}
 }
